@@ -1,0 +1,7 @@
+SELECT C.Country,
+       count(C.SupportRepId) CustomerSupport,
+       sum(I.Total) CountryTotal
+FROM Employee E
+JOIN Customer C ON E.EmployeeId = C.SupportRepId
+JOIN Invoice I ON C.CustomerId = I.CustomerId
+GROUP BY 1
