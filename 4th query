@@ -1,0 +1,12 @@
+SELECT Genre,
+       count(*) LongTracks
+FROM
+  (SELECT Track.Name AS Track,
+          Genre.Name AS Genre,
+          Milliseconds/60000 AS Minutes
+   FROM Track
+   JOIN Genre ON Track.GenreId = Genre.GenreId
+   WHERE Milliseconds/60000 > 30
+   ORDER BY 3 DESC)
+GROUP BY 1
+ORDER BY 2 DESC
