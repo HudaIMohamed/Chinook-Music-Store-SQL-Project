@@ -1,0 +1,18 @@
+WITH T1 AS
+  (SELECT Artist.Name Artist,
+          Genre.Name Genre,
+          sum(InvoiceLine.UnitPrice*quantity) ArtistTotal
+   FROM Artist
+   JOIN Album ON Artist.ArtistId = Album.ArtistId
+   JOIN Track ON Track.AlbumId = Album.AlbumId
+   JOIN Genre ON Genre.GenreId = Track.GenreId
+   JOIN InvoiceLine ON InvoiceLine.TrackId = Track.TrackId
+   GROUP BY 1
+   ORDER BY 3 DESC)
+SELECT Genre,
+       Artist,
+       max(ArtistTotal) TopArtist
+FROM T1
+GROUP BY 1
+ORDER BY 3 DESC
+LIMIT 5
